@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="dpsggladbach.app" version="0.1.0">
+  <name>DPSG Gladbach App</name>
+  <description>
+    App zur Getränkeverwaltung
+  </description>
+  <author email="jannismueller2001@gmail.com">
+    Jannis Mueller
+  </author>
+  <preference name="EnableDeveloperConsole" value="$IS_DEBUG" />
+</widget>

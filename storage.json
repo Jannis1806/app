@@ -1,0 +1,9 @@
+{
+  "platform": "Android",
+  "localStorage": {
+    "showGetraenke": "true",
+    "tabris-js-app:onboarding-complete": "true",
+    "tabris-js-app:recent-urls": "http://192.168.178.21:8080|https://playground.tabris.com/api/v2/playground/337c5010-bfba-11ec-af24-5dcf40168880/package.json",
+    "tabris-js-app:snippet-launch-target": "collectionview.js"
+  }
+}
