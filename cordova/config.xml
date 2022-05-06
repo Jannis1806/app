@@ -7,5 +7,5 @@
   <author email="jannismueller2001@gmail.com">
     Jannis Mueller
   </author>
-  <preference name="EnableDeveloperConsole" value="false" />
+  <preference name="EnableDeveloperConsole" value="$IS_DEBUG" />
 </widget>
