@@ -1,4 +1,4 @@
-import { contentView, drawer, NavigationView, Page, TextView, Composite, ImageView, Switch, Button, Image, AlertDialog, TextInput, ScrollView } from 'tabris';
+import { contentView, drawer, NavigationView, Page, TextView, Composite, ImageView, Switch, Button, Image, AlertDialog } from 'tabris';
 import { property, ListView, Cell, ListViewSelectEvent } from 'tabris-decorators';
 import { Getraenke } from './getraenke';
 import { LoginScreen } from './loginScreen';
