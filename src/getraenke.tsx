@@ -21,10 +21,10 @@ export class Getraenke extends MyPage {
 
   private appear(){
     this.i = 0;
-    $(TextView).set({ text: `Button pressed ${this.i++} times.` });
+    $<TextView>('#label').set({ text: `Button pressed ${this.i++} times.` });
   }
 
   private buttonPressed(){
-    $(TextView).set({ text: `Button pressed ${this.i++} times.` });
+    $<TextView>('#label').set({ text: `Button pressed ${this.i++} times.` });
   }
 }

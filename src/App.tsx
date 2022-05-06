@@ -1,6 +1,7 @@
 import { contentView, drawer, NavigationView, Page, TextView, Composite, ImageView, Switch, Button, Image, AlertDialog, TextInput, ScrollView } from 'tabris';
 import { property, ListView, Cell, ListViewSelectEvent } from 'tabris-decorators';
 import { Getraenke } from './getraenke';
+import { LoginScreen } from './loginScreen';
 import { MyPage } from './mypage';
 
 const CELL_FONT = {iOS: '17px', Android: 'medium 14px'}[device.platform];  
@@ -16,20 +17,25 @@ class menu {
 export class App {
 
   example_menus = [
-    { name: 'Seite 1', text: 'Das ist Seite 1', active: true},
-    { name: 'Seite 2', text: 'Das ist Seite 2', active: true}
+    { name: 'Seite 1', text: 'Das ist Seite 1', active: true}
   ];  
 
   menus: menu[] = [];
 
   constructor(
   ) {
+    let pages: MyPage[] = [];
+    pages.push(new Getraenke());
+    for(let page of pages){
+      this.menus.push({name: page.title, page: page, text: page.title, active: true, image: page.drawer_image});
+    }
+
     this.example_menus.forEach((ex) => this.menus.push(
       {
         name: ex.name, 
         page: new Page({title: ex.name}).append(
         <$>
-          <Switch checked={false} onSelect={() => this.switchChanged()}/>
+          <Switch checked={localStorage.getItem('showGetraenke') === 'true'} onSelect={() => this.switchChanged()}/>
           <Button left={16} right={16} top='prev() 16' stretchX>Create page in drawer</Button>
         </$>
         ),
@@ -37,13 +43,8 @@ export class App {
         active: ex.active,
         image: Image.from({src: 'icons/punkte.png'})
       }
-    ));
-
-    let pages: MyPage[] = [];
-    pages.push(new Getraenke());
-    for(let page of pages){
-      this.menus.push({name: page.title, page: page, text: page.title, active: true, image: page.drawer_image});
-    }
+      )
+    );
 
     this.menus.forEach((menu) => { menu.active = (menu.page instanceof Getraenke) ? localStorage.getItem('showGetraenke') === 'true' : true});
     for (let menu of this.menus){
@@ -58,7 +59,7 @@ export class App {
         layoutData: 'stretch',
         drawerActionVisible: true,
         excludeFromLayout: true
-      }).append(this.menus[0].page)
+      }).append(this.menus.filter((menu) => menu.active==true)[0].page)
     );
     drawer.enabled = true; 
 
@@ -81,29 +82,9 @@ export class App {
       </$>
       );     
       
-    contentView.append(
-      <ScrollView stretch id='loginScreen' excludeFromLayout={true}>
-        <Composite top={0} bottom='70%' stretchX highlightOnTouch>
-          <ImageView center scaleMode='auto' image={{src: 'icons/stammeswappen_animiert.png'}} tintColor='white'/>
-        </Composite>   
-        <Composite top='prev()' bottom='50%' stretchX highlightOnTouch>
-          <TextView center text='Login' font={{size: 32}}/>
-        </Composite>  
-        <Composite top='prev()' stretchX highlightOnTouch>
-          <TextInput top='4' bottom='4' left={24} right={24} keepFocus message='Email-Adresse' keyboard='email'/>
-        </Composite>  
-        <Composite top='prev()' stretchX highlightOnTouch>
-          <TextInput top='4' bottom='4' left={24} right={24} keepFocus message='Passwort' type='password'/>
-        </Composite>
-        <Composite top='prev()' stretchX highlightOnTouch>
-          <TextView left={24} textColor='blue'>Passwort vergessen?</TextView>
-          <TextView right={24} textColor='blue'>Neu registrieren</TextView>
-        </Composite>
-        <Composite top='prev()' stretchX highlightOnTouch>
-          <Button centerX  top='prev() 64' text='Einloggen' onSelect={() => this.openMainMenu()} />
-        </Composite>  
-      </ScrollView>
-      );   
+      
+    new LoginScreen(this);
+  
 
     this.openLogInScreen();
   }
@@ -112,10 +93,10 @@ export class App {
     drawer.close();
     drawer.enabled = false;
     $('#mainNavigationView').only().excludeFromLayout = true;
-    $('#loginScreen').only().excludeFromLayout = false;
+    $(`#${LoginScreen.id}`).only().excludeFromLayout = false;
   }
 
-  private openMainMenu(){
+  public openMainMenu(){
     drawer.enabled = true;
     $('#mainNavigationView').only().excludeFromLayout = false;
     $('#loginScreen').only().excludeFromLayout = true;
