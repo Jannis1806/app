@@ -83,7 +83,7 @@ export class App {
       );     
       
       
-    new LoginScreen(this);
+    contentView.append(new LoginScreen(this));
   
 
     this.openLogInScreen();

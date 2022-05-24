@@ -9,7 +9,6 @@
     "start": "tabris serve -a -w"
   },
   "dependencies": {
-    "sqlite": "^4.1.1",
     "tabris": "~3.7.1",
     "tabris-decorators": "~3.7.1"
   },
