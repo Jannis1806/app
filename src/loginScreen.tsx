@@ -72,7 +72,7 @@ export class LoginScreen extends Composite{
 
     const blob = new Blob([JSON.stringify(loginInformation, null, 2)], {type : 'application/json'});
 
-    const request = new Request('http://archiv.dpsg-gladbach.de:3000/auth/login', 
+    const request = new Request('http://api.dpsg-gladbach.de:3000/auth/login', 
     {
       body: blob,
       method: 'POST',
