@@ -41,7 +41,7 @@ export class LoginScreen extends Composite{
           <TextView right={24} textColor='blue' highlightOnTouch>Neu registrieren</TextView>
         </Composite>
         <Composite top='prev()' stretchX>
-          <Button centerX  top='prev() 64' text='Einloggen' onSelect={() => this.login()} />
+          <Button centerX top='prev() 64' text='Einloggen' onSelect={() => this.login()}/>
         </Composite> 
       </ScrollView>  
     )
@@ -57,13 +57,6 @@ export class LoginScreen extends Composite{
   private async login(){   
     $('#loginActivity').first().excludeFromLayout=false;
 
-    // const request = new Request('http://archiv.dpsg-gladbach.de:3000/api/user', 
-    // {
-    //   method: 'GET',
-    //   headers:
-    //     { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphbm5pc211ZWxsZXIyMDAxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjIyZjRiOTY5LTU3YzctNGM0OS1iZGY2LWJhZDM5MjE4MzRjYiIsImlhdCI6MTY1MzM4ODA4NywiZXhwIjoxNjUzOTkyODg3fQ.YOy8o-JP8pyaTUeGfJiC_ysiZqz4KLnKUq3fD_mIvqk'}
-    // });
-
     const loginInformation = 
       {
         email: this.email,
@@ -75,15 +68,13 @@ export class LoginScreen extends Composite{
     const request = new Request('http://archiv.dpsg-gladbach.de:3000/auth/login', 
     {
       body: blob,
-      method: 'POST',
-      timeout: 5000
+      method: 'POST'
     });
   
-    console.log(await request.clone().json());
+    console.log('Login Request: ' + await request.clone().json());
 
     try {
-      const response = await fetch(request);   
-      // const response = await fetch('http://ip-api.com/json');
+      const response = await fetch(request, { timeout: 5000 });  
       if (!response.ok) {
         throw new Error(`HTTP ${response.status} - ${response.statusText}`);
       }
@@ -94,7 +85,6 @@ export class LoginScreen extends Composite{
       console.log(error);
     }
     $('#loginActivity').first().excludeFromLayout=true;
-    // xhr.onerror = (err) => console.log(err);
 
   }
 }
