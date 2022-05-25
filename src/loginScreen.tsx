@@ -65,7 +65,7 @@ export class LoginScreen extends Composite{
 
     const blob = new Blob([JSON.stringify(loginInformation, null, 2)], {type : 'application/json'});
 
-    const request = new Request('http://archiv.dpsg-gladbach.de:3000/auth/login', 
+    const request = new Request('http://api.dpsg-gladbach.de:3000/auth/login', 
     {
       body: blob,
       method: 'POST'
@@ -74,7 +74,7 @@ export class LoginScreen extends Composite{
     console.log('Login Request: ' + await request.clone().json());
 
     try {
-      const response = await fetch(request, { timeout: 5000 });  
+      const response = await fetch(request);  
       if (!response.ok) {
         throw new Error(`HTTP ${response.status} - ${response.statusText}`);
       }
