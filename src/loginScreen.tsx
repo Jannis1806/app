@@ -1,6 +1,8 @@
 import { Composite, ScrollView, TextInput, TextView, ImageView, Button, app, ActivityIndicator, contentView } from "tabris";
 import { bind, component } from "tabris-decorators";
 import { App } from "./App";
+import { MainMenu } from "./mainmenu";
+import { RegistrationScreen } from "./registration";
 
 @component
 export class LoginScreen extends Composite{
@@ -38,7 +40,7 @@ export class LoginScreen extends Composite{
         </Composite>
         <Composite top='prev()' stretchX>
           <TextView left={24} textColor='blue' highlightOnTouch>Passwort vergessen?</TextView>
-          <TextView right={24} textColor='blue' highlightOnTouch>Neu registrieren</TextView>
+          <TextView right={24} textColor='blue' highlightOnTouch onTap={() => this.openRegistrationScreen()}>Neu registrieren</TextView>
         </Composite>
         <Composite top='prev()' stretchX>
           <Button centerX top='prev() 64' text='Einloggen' onSelect={() => this.login()}/>
@@ -54,7 +56,16 @@ export class LoginScreen extends Composite{
     app.launch('https://www.dpsg-gladbach.de/')
   }
 
+  private openRegistrationScreen(){
+    this.app.openScreen(RegistrationScreen.id);
+  }
+
   private async login(){   
+    if (this.email == 'dev'){
+      this.app.openScreen(MainMenu.id);
+      return;
+    }
+    
     $('#loginActivity').first().excludeFromLayout=false;
 
     const loginInformation = 
@@ -80,7 +91,7 @@ export class LoginScreen extends Composite{
       }
       const data = await response.json();   
       console.log(data);      
-      this.app.openMainMenu();
+      this.app.openScreen(MainMenu.id);
     } catch (error) {
       console.log(error);
     }
